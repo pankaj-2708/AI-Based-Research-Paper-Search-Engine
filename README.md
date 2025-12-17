@@ -4,7 +4,44 @@
     <img src="https://img.shields.io/badge/CCDS-Project%20template-328F97?logo=cookiecutter" />
 </a>
 
-A short description of the project.
+This project implements an AI-based research paper search engine. It uses **SPECTER2 (by AllenAI)** to generate dense vector representations of research papers. Users can describe their query in natural language, and the system retrieves the most relevant papers from the corpus based on semantic similarity.
+
+> **Note:**  
+> The corpus consists of **540,000 research papers from arXiv**. The model may fail to retrieve some relevant papers if they are **not present in this corpus**.
+
+---
+
+## Project Workflow
+
+1. **Paper Encoding**  
+   All research papers from the corpus (540K papers) are encoded into **768-dimensional embeddings** using **SPECTER2 (AllenAI)**.
+
+2. **Index Construction**  
+   The generated embeddings are used to build a **FAISS index** using the **IndexIVFFlat** method for efficient similarity search.
+
+3. **Query Encoding**  
+   The user’s natural-language query is encoded into a vector using the **same SPECTER2 model**.
+
+4. **Retrieval**  
+   The system retrieves the **Top-K closest embeddings** from the FAISS index and returns the corresponding **paper titles and arXiv links** to the user.
+
+## Tech Stack
+
+1. **Hugging Face**  
+   Used for loading and running the pretrained **SPECTER2** model.
+
+2. **FAISS**  
+   Enables efficient similarity search over the research paper corpus.
+
+3. **AWS S3**  
+   Used to store the FAISS index and the corresponding metadata/dataframes.
+
+4. **Streamlit**  
+   Provides the frontend interface for user interaction.
+
+5. **FastAPI**  
+   Serves as the backend API to handle query processing and retrieval.
+
 
 ## Project Organization
 
